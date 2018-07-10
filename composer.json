@@ -1,0 +1,16 @@
+{
+    "name": "sea/apisdk",
+    "description": "内部接口封装",
+    "authors": [
+        {
+            "name": "lv",
+            "email": "191728419@qq.com"
+        }
+    ],
+    "require": {},
+    "autoload":{
+        "psr-4" : {
+            "ApiSdk\\" : "src/"
+        }
+    }
+}

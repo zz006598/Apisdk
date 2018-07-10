@@ -6,7 +6,7 @@
  * Time: 13:43
  */
 
-namespace Sea\Apisdk\Providers;
+namespace Sea\ApiSdk\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Sdk\Collect\LivePreview;

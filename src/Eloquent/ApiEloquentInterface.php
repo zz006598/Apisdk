@@ -6,7 +6,7 @@
  * Time: 14:35
  */
 
-namespace Sea\Apisdk\Eloquent;
+namespace Sea\ApiSdk\Eloquent;
 
 
 interface ApiEloquentInterface

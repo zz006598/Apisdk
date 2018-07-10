@@ -6,7 +6,7 @@
  * Time: 14:34
  */
 
-namespace Sea\Apisdk\Eloquent;
+namespace Sea\ApiSdk\Eloquent;
 
 use GuzzleHttp\Client as Http;
 use Illuminate\Contracts\Support\Arrayable;
