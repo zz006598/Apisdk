@@ -7,7 +7,10 @@
             "email": "191728419@qq.com"
         }
     ],
-    "require": {},
+    "require": {
+        "guzzlehttp/guzzle": "~6.0",
+        "laravel/lumen-framework":"5.5.*"
+    },
     "autoload":{
         "psr-4" : {
             "Sea\\ApiSdk\\" : "src/"
