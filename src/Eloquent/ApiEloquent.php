@@ -10,6 +10,8 @@ namespace Sea\ApiSdk\Eloquent;
 
 use GuzzleHttp\Client as Http;
 use Illuminate\Contracts\Support\Arrayable;
+use GuzzleHttp\Exception\RequestException;
+use Sea\ApiSdk\Exception\ApiSdkException;
 
 abstract class ApiEloquent implements ApiEloquentInterface
 {
@@ -56,9 +58,59 @@ abstract class ApiEloquent implements ApiEloquentInterface
     {
         $this->makeUrl();
         $this->buildQuery();
+        try{
+            $response = $this->client->request('GET', $this->url);
+            return $this->json($response->getBody());
+        }
+        catch(RequestException $e){
+            $this->requestAbnormal($e);
+        }
+    }
 
-        $response = $this->client->request('GET', $this->url);
-        return $this->json($response->getBody());
+
+
+    /**
+     * 请求post资源
+     * @param null $data
+     * @return mixed
+     */
+    public function post($data = null)
+    {
+        $this->makeUrl();
+        $this->buildQuery();
+        try {
+            $response = $this->client->request('POST', $this->url, array(
+                'form_params' => $this->body
+            ));
+            return $this->json($response->getBody());
+        } catch(RequestException $e){
+            $this->requestAbnormal($e);
+        }
+    }
+
+    /**
+     * 请求异常处理
+     * @param RequestException $e
+     */
+    private function requestAbnormal(RequestException $e){
+
+        $message    = $e->getMessage();
+
+        if($e->getResponse()){
+            $body       = $e->getResponse()->getBody();
+            if($body){
+                $res  = $this->json($body);
+                if(!is_null($res)){
+                    $message  = $body;
+                }else{
+                    $message  = $res['message'];
+                }
+            }else{
+                $message = '未知错误';
+            }
+        }
+
+        throw new ApiSdkException($message);
     }
 
     /**
@@ -75,26 +127,13 @@ abstract class ApiEloquent implements ApiEloquentInterface
     }
 
     /**
-     * 请求post资源
-     * @param null $data
-     * @return mixed
-     */
-    public function post($data = null)
-    {
-        $this->makeUrl();
-        $this->buildQuery();
-
-        $response = $this->client->request('POST', $this->url);
-        return $this->json($response->getBody());
-    }
-
-    /**
      * 设置body内容
      * @param array $data
      */
-    public function setBody(array $data)
+    public function setBody(array $data = [])
     {
         $this->body = $data;
+        return $this;
     }
 
     /**
