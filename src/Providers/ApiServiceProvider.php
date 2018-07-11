@@ -21,6 +21,7 @@ class ApiServiceProvider extends ServiceProvider
      */
     public function register(){
         $this->app->singleton('api.collect.live',LivePreview::class);
+        print_r(config('sdk'));
     }
 
     /**

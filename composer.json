@@ -9,7 +9,8 @@
     ],
     "require": {
         "guzzlehttp/guzzle": "~6.0",
-        "laravel/lumen-framework":"^5.5"
+        "laravel/lumen-framework":"^5.5",
+        "laravelista/lumen-vendor-publish": "^2.1"
     },
     "autoload":{
         "psr-4" : {
