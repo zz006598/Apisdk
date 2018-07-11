@@ -13,4 +13,4 @@ trait Collect
     protected function host(){
         return 'http://192.168.2.183:8090';
     }
-}
+} 
