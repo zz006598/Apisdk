@@ -20,8 +20,7 @@ class ApiServiceProvider extends ServiceProvider
      * @return void
      */
     public function register(){
-        $this->app->singleton('api.collect.live',LivePreview::class);
-        print_r(config('sdk'));
+
     }
 
     /**
@@ -30,6 +29,15 @@ class ApiServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot(){
+        $this->app->configure('sdk');
+        $this->publishes([
+            __DIR__.'/../../resources/config/sdk.php' => config_path('sdk.php')
+        ]);
+        $this->mergeConfigFrom(__DIR__.'/../../resources/config/sdk.php','sdk');
 
+        $api = config('sdk.api');
+        foreach($api as $key => $value){
+            $this->app->singleton($key,$value);
+        }
     }
 }
