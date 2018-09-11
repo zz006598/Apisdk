@@ -71,16 +71,17 @@ abstract class ApiEloquent implements ApiEloquentInterface
 
     /**
      * 请求post资源
-     * @param null $data
+     * @param array $data
+     * @param string $type
      * @return mixed
      */
-    public function post($data = null)
+    public function post($data = null,$type = 'json')
     {
         $this->makeUrl();
         $this->buildQuery();
         try {
             $response = $this->client->request('POST', $this->url, array(
-                'form_params' => $this->body
+                $type => $this->body
             ));
             return $this->json($response->getBody());
         } catch(RequestException $e){
@@ -100,7 +101,7 @@ abstract class ApiEloquent implements ApiEloquentInterface
             $body       = $e->getResponse()->getBody();
             if($body){
                 $res  = $this->json($body);
-                if(!is_null($res)){
+                if(is_null($res)){
                     $message  = $body;
                 }else{
                     $message  = $res['message'];
